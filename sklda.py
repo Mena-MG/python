@@ -1,45 +1,41 @@
-saturation_input = input('Enter saturation channel value: ')
-tt=""
-if len(saturation_input) > 0:
-    temp = saturation_input[0]
-    c = 0
-    for s in saturation_input:
-        if s == temp:
-            c += 1
-        else:
-            tt+=str(c)+temp
-            temp = s
-            c = 1
-    tt += str(c) + temp
-    print(tt)
+import numpy as np
+import cv2
+import imutils
 
-else:
-    print("No input provided")
-    print(tt)
+imge =np.ones((500,500,3),dtype=np.uint8)*255
+# line
+start = (400,400)
+end = (100,100)
+color = (0,255,0)
+# line2
+start2 = (400,300)
+end2 = (100,300)
+color2 = (0,255,0)
 
-encoded_input = tt
-decoded_output = ""
-temp_count = ""
+# circle
+center = (200,200)
+radius = 50
+color = (0,255,0)
+thinkness=5
 
-if len(encoded_input) > 0:
-    for char in encoded_input:
-        # Check if the character is a number (0-9)
-        if char.isdigit():
-            temp_count += char
-        else:
-            # We found a non-digit character, time to decode
-            if temp_count != "":
-                count = int(temp_count)
-                decoded_output += char * count
 
-                # Reset the count for the next group
-                temp_count = ""
-            else:
-                # This handles cases where input might be malformed (e.g., starts with a letter)
-                print("Error: Format incorrect. Expected number before character.")
-                break
+# rectangle
+startrect = (100,100)
+endrect = (400,400)
+color = (0,255,0)
+thinkness=5
 
-    print(decoded_output)
+cv2.line(imge,start,end,color,thinkness)
+cv2.line(imge,start2,end2,color2,thinkness)
+# cv2.circle(imge,center,radius,color,thinkness)
+cv2.rectangle(imge,startrect,endrect,color,thinkness)
+# cv2.putText(imge,"Hello",(100,100),cv2.FONT_HERSHEY_SIMPLEX,1,color,thinkness)
 
-else:
-    print("No input provided")
+# edited_imge = cv2.resize(imge,None,fx=2,fy=2,interpolation=cv2.INTER_LINEAR)
+
+# rotated_image = imutils.rotate(edited_imge, 45)
+# rotated_image = cv2.rotate(edited_imge, cv2.ROTATE_65)
+# cv2.imshow("editd",edited_imge)
+cv2.imshow("image",imge)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
